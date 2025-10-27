@@ -12,14 +12,14 @@ const CardLabel = styled.span`
 
 const CardTitle = styled.span`
   color: #333;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: normal;
   margin-top: 10px;
 `;
 
 const CardImage = styled.img`
-  height: 80px;
-  width: 80px;
+  height: 150px;
+  width: 150px;
   border-radius: 50%;
 `;
 
@@ -31,7 +31,8 @@ const CardWrapper = styled.div`
   padding: 15px;
   background-color: ${colors.backgroundLight};
   border-radius: 30px;
-  width: 350px;
+  width: 300px;
+  height: 300px;
   transition: 200ms;
   &:hover {
     cursor: pointer;

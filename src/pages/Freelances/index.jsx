@@ -1,25 +1,27 @@
-import DefaultPicture from "../../assets/images/profile.png";
+// import DefaultPicture from "../../assets/images/profile.png";
 import Card from "../../components/card";
 import styled from "styled-components";
 import colors from "../../utils/style/colors";
+import { Loader } from "../../utils/style/atoms";
+import { useEffect, useState } from "react";
 
-const freelanceProfiles = [
-  {
-    name: "Jane Doe",
-    jobTitle: "Devops",
-    picture: DefaultPicture,
-  },
-  {
-    name: "John Doe",
-    jobTitle: "Developpeur frontend",
-    picture: DefaultPicture,
-  },
-  {
-    name: "Jeanne Biche",
-    jobTitle: "Développeuse Fullstack",
-    picture: DefaultPicture,
-  },
-];
+// const freelanceProfiles = [
+//   {
+//     name: "Jane Doe",
+//     jobTitle: "Devops",
+//     picture: DefaultPicture,
+//   },
+//   {
+//     name: "John Doe",
+//     jobTitle: "Developpeur frontend",
+//     picture: DefaultPicture,
+//   },
+//   {
+//     name: "Jeanne Biche",
+//     jobTitle: "Développeuse Fullstack",
+//     picture: DefaultPicture,
+//   },
+// ];
 
 const CardsContainer = styled.div`
   display: grid;
@@ -45,7 +47,42 @@ const PageSubtitle = styled.h2`
   padding-bottom: 30px;
 `;
 
+const LoaderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 function Freelances() {
+  const [isDataLoading, setDataLoading] =
+    useState(true);
+  const [error, setError] = useState(false);
+  const [freelancersList, setFreelancersList] =
+    useState([]);
+
+  useEffect(() => {
+    async function fetchFreelances() {
+      setDataLoading(true);
+      try {
+        const response = await fetch(
+          `http://localhost:8000/freelances`
+        );
+        const { freelancersList } =
+          await response.json();
+        setFreelancersList(freelancersList);
+      } catch (error) {
+        console.log("===== error =====", error);
+        setError(true);
+      } finally {
+        setDataLoading(false);
+      }
+    }
+    fetchFreelances();
+  }, []);
+
+  if (error) {
+    return <span>Il y a eu une erreur</span>;
+  }
+
   return (
     <div>
       <PageTitle>
@@ -55,18 +92,24 @@ function Freelances() {
         Chez Shiny nous réunissons les meilleurs
         profils pour vous.
       </PageSubtitle>
-      <CardsContainer>
-        {freelanceProfiles.map(
-          (profile, index) => (
-            <Card
-              key={`${profile.name}-${index}`}
-              label={profile.jobTitle}
-              picture={profile.picture}
-              title={profile.name}
-            />
-          )
-        )}
-      </CardsContainer>
+      {isDataLoading ? (
+        <LoaderWrapper>
+          <Loader />
+        </LoaderWrapper>
+      ) : (
+        <CardsContainer>
+          {freelancersList.map(
+            (profile, index) => (
+              <Card
+                key={`${profile.name}-${index}`}
+                label={profile.job}
+                picture={profile.picture}
+                title={profile.name}
+              />
+            )
+          )}
+        </CardsContainer>
+      )}
     </div>
   );
 }
