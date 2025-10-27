@@ -56,7 +56,7 @@ function Freelances() {
   const [isDataLoading, setDataLoading] =
     useState(true);
   const [error, setError] = useState(false);
-  const [freelancersList, setFreelancersList] =
+  const [freelancersList, setFreelancesList] =
     useState([]);
 
   useEffect(() => {
@@ -68,7 +68,7 @@ function Freelances() {
         );
         const { freelancersList } =
           await response.json();
-        setFreelancersList(freelancersList);
+        setFreelancesList(freelancersList);
       } catch (error) {
         console.log("===== error =====", error);
         setError(true);
@@ -103,8 +103,8 @@ function Freelances() {
               <Card
                 key={`${profile.name}-${index}`}
                 label={profile.job}
-                picture={profile.picture}
                 title={profile.name}
+                picture={profile.picture}
               />
             )
           )}
