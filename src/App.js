@@ -6,7 +6,10 @@ import Header from "./components/header";
 import Error from "./components/error";
 import Results from "./pages/Results";
 import Freelances from "./pages/Freelances";
-import { ThemeProvider } from "./utils/context";
+import {
+  SurveyProvider,
+  ThemeProvider,
+} from "./utils/context";
 import Footer from "./components/footer";
 import GlobalStyle from "./utils/style/GlobalStyle";
 
@@ -20,26 +23,28 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider>
-        <GlobalStyle />
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/survey/:questionNumber"
-            element={<Survey />}
-          />
-          <Route
-            path="/results"
-            element={<Results />}
-          />
-          <Route
-            path="/freelances"
-            element={<Freelances />}
-          />
-          <Route path="*" element={<Error />} />
-          {/* Ajoutez d'autres routes ici */}
-        </Routes>
-        <Footer />
+        <SurveyProvider>
+          <GlobalStyle />
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="/survey/:questionNumber"
+              element={<Survey />}
+            />
+            <Route
+              path="/results"
+              element={<Results />}
+            />
+            <Route
+              path="/freelances"
+              element={<Freelances />}
+            />
+            <Route path="*" element={<Error />} />
+            {/* Ajoutez d'autres routes ici */}
+          </Routes>
+          <Footer />
+        </SurveyProvider>
       </ThemeProvider>
     </div>
   );
