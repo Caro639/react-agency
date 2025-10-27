@@ -3,7 +3,11 @@ import Card from "../../components/card";
 import styled from "styled-components";
 import colors from "../../utils/style/colors";
 import { Loader } from "../../utils/style/atoms";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
+import {
+  useFetch,
+  useTheme,
+} from "../../utils/hooks";
 
 // const freelanceProfiles = [
 //   {
@@ -53,31 +57,40 @@ const LoaderWrapper = styled.div`
 `;
 
 function Freelances() {
-  const [isDataLoading, setDataLoading] =
-    useState(true);
-  const [error, setError] = useState(false);
-  const [freelancersList, setFreelancesList] =
-    useState([]);
+  // const [isDataLoading, setDataLoading] =
+  //   useState(true);
+  // const [error, setError] = useState(false);
+  // const [freelancersList, setFreelancesList] =
+  //   useState([]);
 
-  useEffect(() => {
-    async function fetchFreelances() {
-      setDataLoading(true);
-      try {
-        const response = await fetch(
-          `http://localhost:8000/freelances`
-        );
-        const { freelancersList } =
-          await response.json();
-        setFreelancesList(freelancersList);
-      } catch (error) {
-        console.log("===== error =====", error);
-        setError(true);
-      } finally {
-        setDataLoading(false);
-      }
-    }
-    fetchFreelances();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchFreelances() {
+  //     setDataLoading(true);
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:8000/freelances`
+  //       );
+  //       const { freelancersList } =
+  //         await response.json();
+  //       setFreelancesList(freelancersList);
+  //     } catch (error) {
+  //       console.log("===== error =====", error);
+  //       setError(true);
+  //     } finally {
+  //       setDataLoading(false);
+  //     }
+  //   }
+  //   fetchFreelances();
+  // }, []);
+
+  const { theme } = useTheme();
+
+  const { data, isLoading, error } = useFetch(
+    `http://localhost:8000/freelances`
+  );
+
+  // Ici le "?" permet de s'assurer que data existe bien.
+  const freelancersList = data?.freelancersList;
 
   if (error) {
     return <span>Il y a eu une erreur</span>;
@@ -85,16 +98,16 @@ function Freelances() {
 
   return (
     <div>
-      <PageTitle>
+      <PageTitle theme={theme}>
         Trouvez votre prestataire
       </PageTitle>
-      <PageSubtitle>
+      <PageSubtitle theme={theme}>
         Chez Shiny nous réunissons les meilleurs
         profils pour vous.
       </PageSubtitle>
-      {isDataLoading ? (
+      {isLoading ? (
         <LoaderWrapper>
-          <Loader />
+          <Loader theme={theme} />
         </LoaderWrapper>
       ) : (
         <CardsContainer>
