@@ -68,13 +68,13 @@ const Illustration = styled.img`
   flex: 1;
 `;
 
-function App() {
+function Home() {
   return (
     <HomeWrapper>
       <HomerContainer>
         <LeftCol>
           <StyledTitle>
-            Repérez vos besoins, on s’occupe du
+            Repérez vos besoins, on s'occupe du
             reste, avec les meilleurs talents
           </StyledTitle>
           <StyledLink to="/survey/1" $isFullLink>
@@ -87,4 +87,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;

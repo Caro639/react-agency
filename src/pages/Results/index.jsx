@@ -113,7 +113,7 @@ function Results() {
     `http://localhost:8000/results?${queryParams}`
   );
 
-  console.log("===== data =====", data);
+  // console.log("===== data =====", data);
 
   if (error) {
     return <span>Il y a eu une erreur</span>;
@@ -123,7 +123,7 @@ function Results() {
 
   return isLoading ? (
     <LoaderWrapper>
-      <Loader />
+      <Loader data-testid="loader" />
     </LoaderWrapper>
   ) : (
     <ResultsContainer theme={theme}>
@@ -157,10 +157,15 @@ function Results() {
               theme={theme}
               key={`result-detail-${index}-${result.title}`}
             >
-              <JobTitle theme={theme}>
+              <JobTitle
+                theme={theme}
+                data-testid="job-title"
+              >
                 {result.title}
               </JobTitle>
-              <p>{result.description}</p>
+              <p data-testid="job-description">
+                {result.description}
+              </p>
             </JobDescription>
           ))}
       </DescriptionWrapper>

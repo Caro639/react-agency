@@ -19,6 +19,10 @@ const BrowserRouter = ({ children }) => (
   <div>{children}</div>
 );
 
+const MemoryRouter = ({ children }) => (
+  <div>{children}</div>
+);
+
 module.exports = {
   Link,
   useParams,
@@ -26,5 +30,6 @@ module.exports = {
   Routes,
   Route,
   BrowserRouter,
+  MemoryRouter,
   __mockNavigate: mockNavigate,
 };

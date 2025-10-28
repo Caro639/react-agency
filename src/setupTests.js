@@ -4,6 +4,30 @@
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
 import { cleanup } from "@testing-library/react";
+import { TextEncoder, TextDecoder } from "util";
+
+// Polyfills pour MSW
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+
+// Mock TransformStream pour MSW
+global.TransformStream = class TransformStream {
+  constructor() {
+    this.readable = {};
+    this.writable = {};
+  }
+};
+
+// Mock BroadcastChannel pour MSW
+global.BroadcastChannel = class BroadcastChannel {
+  constructor(name) {
+    this.name = name;
+  }
+  postMessage() {}
+  close() {}
+  addEventListener() {}
+  removeEventListener() {}
+};
 
 // Nettoie après chaque test
 afterEach(() => {

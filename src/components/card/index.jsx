@@ -2,16 +2,22 @@ import PropTypes from "prop-types";
 import { validateProps } from "../../utils/propValidation";
 import styled from "styled-components";
 import colors from "../../utils/style/colors";
+import { useState } from "react";
+import { useTheme } from "../../utils/hooks";
 
 const CardLabel = styled.span`
-  color: ${colors.primary};
+  color: ${({ theme }) =>
+    theme === "light"
+      ? colors.primary
+      : "#ffffff"};
   font-size: 22px;
   font-weight: bold;
   margin-bottom: 10px;
 `;
 
 const CardTitle = styled.span`
-  color: #333;
+  color: ${({ theme }) =>
+    theme === "light" ? "#000000" : "#ffffff"};
   font-size: 22px;
   font-weight: normal;
   margin-top: 10px;
@@ -29,7 +35,10 @@ const CardWrapper = styled.div`
   justify-content: space-around;
   align-items: center;
   padding: 15px;
-  background-color: ${colors.backgroundLight};
+  background-color: ${({ theme }) =>
+    theme === "light"
+      ? colors.backgroundLight
+      : colors.backgroundDark};
   border-radius: 30px;
   width: 300px;
   height: 300px;
@@ -54,11 +63,22 @@ function Card({ label, title, picture }) {
     "Card"
   );
 
+  const { theme } = useTheme();
+  const [isFavorite, setIsFavorite] =
+    useState(false);
+  const star = isFavorite ? "⭐️" : "";
+
   return (
-    <CardWrapper>
-      <CardLabel>{label}</CardLabel>
+    <CardWrapper
+      data-testid="card-wrapper"
+      theme={theme}
+      onClick={() => setIsFavorite(!isFavorite)}
+    >
+      <CardLabel theme={theme}>{label}</CardLabel>
       <CardImage src={picture} alt="freelance" />
-      <CardTitle>{title}</CardTitle>
+      <CardTitle theme={theme}>
+        {star} {title} {star}
+      </CardTitle>
     </CardWrapper>
   );
 }

@@ -90,7 +90,8 @@ function Freelances() {
   );
 
   // Ici le "?" permet de s'assurer que data existe bien.
-  const freelancersList = data?.freelancersList;
+  const freelancersList =
+    data?.freelancersList || [];
 
   if (error) {
     return <span>Il y a eu une erreur</span>;
@@ -107,7 +108,10 @@ function Freelances() {
       </PageSubtitle>
       {isLoading ? (
         <LoaderWrapper>
-          <Loader theme={theme} />
+          <Loader
+            theme={theme}
+            data-testid="loader"
+          />
         </LoaderWrapper>
       ) : (
         <CardsContainer>
