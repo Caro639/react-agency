@@ -66,7 +66,8 @@ const LoaderWrapper = styled.div`
   justify-content: center;
 `;
 
-function formatQueryParams(answers) {
+// test export function
+export function formatQueryParams(answers) {
   const answerNumbers = Object.keys(answers);
 
   return answerNumbers.reduce(
@@ -78,6 +79,30 @@ function formatQueryParams(answers) {
     ""
   );
 }
+
+export function formatJobList(
+  title,
+  listLength,
+  index
+) {
+  if (index === listLength - 1) {
+    return title;
+  }
+  return `${title},`;
+}
+
+// function formatQueryParams(answers) {
+//   const answerNumbers = Object.keys(answers);
+
+//   return answerNumbers.reduce(
+//     (previousParams, answerNumber, index) => {
+//       const isFirstParam = index === 0;
+//       const separator = isFirstParam ? "" : "&";
+//       return `${previousParams}${separator}a${answerNumber}=${answers[answerNumber]}`;
+//     },
+//     ""
+//   );
+// }
 
 function Results() {
   const { theme } = useTheme();
@@ -110,10 +135,15 @@ function Results() {
               key={`result-title-${index}-${result.title}`}
               theme={theme}
             >
-              {result.title}
+              {formatJobList(
+                result.title,
+                resultsData.length,
+                index
+              )}
+              {/* {result.title}
               {index === resultsData.length - 1
                 ? ""
-                : ","}
+                : ","} */}
             </JobTitle>
           ))}
       </ResultsTitle>
