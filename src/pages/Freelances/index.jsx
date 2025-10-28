@@ -8,6 +8,7 @@ import {
   useFetch,
   useTheme,
 } from "../../utils/hooks";
+import { Link } from "react-router-dom";
 
 // const freelanceProfiles = [
 //   {
@@ -56,33 +57,34 @@ const LoaderWrapper = styled.div`
   justify-content: center;
 `;
 
+// function Freelances() {
+// const [isDataLoading, setDataLoading] =
+//   useState(true);
+// const [error, setError] = useState(false);
+// const [freelancersList, setFreelancesList] =
+//   useState([]);
+
+// useEffect(() => {
+//   async function fetchFreelances() {
+//     setDataLoading(true);
+//     try {
+//       const response = await fetch(
+//         `http://localhost:8000/freelances`
+//       );
+//       const { freelancersList } =
+//         await response.json();
+//       setFreelancesList(freelancersList);
+//     } catch (error) {
+//       console.log("===== error =====", error);
+//       setError(true);
+//     } finally {
+//       setDataLoading(false);
+//     }
+//   }
+//   fetchFreelances();
+// }, []);
+
 function Freelances() {
-  // const [isDataLoading, setDataLoading] =
-  //   useState(true);
-  // const [error, setError] = useState(false);
-  // const [freelancersList, setFreelancesList] =
-  //   useState([]);
-
-  // useEffect(() => {
-  //   async function fetchFreelances() {
-  //     setDataLoading(true);
-  //     try {
-  //       const response = await fetch(
-  //         `http://localhost:8000/freelances`
-  //       );
-  //       const { freelancersList } =
-  //         await response.json();
-  //       setFreelancesList(freelancersList);
-  //     } catch (error) {
-  //       console.log("===== error =====", error);
-  //       setError(true);
-  //     } finally {
-  //       setDataLoading(false);
-  //     }
-  //   }
-  //   fetchFreelances();
-  // }, []);
-
   const { theme } = useTheme();
 
   const { data, isLoading, error } = useFetch(
@@ -117,12 +119,18 @@ function Freelances() {
         <CardsContainer>
           {freelancersList.map(
             (profile, index) => (
-              <Card
-                key={`${profile.name}-${index}`}
-                label={profile.job}
-                title={profile.name}
-                picture={profile.picture}
-              />
+              <Link
+                key={`freelance-${profile.id}`}
+                to={`/profile/${profile.id}`}
+              >
+                <Card
+                  key={`${profile.name}-${index}`}
+                  label={profile.job}
+                  title={profile.name}
+                  picture={profile.picture}
+                  theme={theme}
+                />
+              </Link>
             )
           )}
         </CardsContainer>

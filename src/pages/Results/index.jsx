@@ -10,6 +10,7 @@ import {
   Loader,
 } from "../../utils/style/atoms";
 import colors from "../../utils/style/colors";
+import EmptyList from "../../components/emptyList";
 
 const ResultsContainer = styled.div`
   display: flex;
@@ -120,6 +121,10 @@ function Results() {
   }
 
   const resultsData = data?.resultsData || [];
+
+  if (resultsData?.length < 1) {
+    return <EmptyList theme={theme} />;
+  }
 
   return isLoading ? (
     <LoaderWrapper>

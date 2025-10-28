@@ -12,6 +12,7 @@ import {
 } from "./utils/context";
 import Footer from "./components/footer";
 import GlobalStyle from "./utils/style/GlobalStyle";
+import ProfileContainer from "./components/profileContainer";
 
 // const GlobalStyle = createGlobalStyle`
 //     * {
@@ -39,6 +40,10 @@ function App() {
             <Route
               path="/freelances"
               element={<Freelances />}
+            />
+            <Route
+              path="/profile/:id"
+              element={<ProfileContainer />}
             />
             <Route path="*" element={<Error />} />
             {/* Ajoutez d'autres routes ici */}

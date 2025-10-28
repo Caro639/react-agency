@@ -2,8 +2,10 @@ import PropTypes from "prop-types";
 import { validateProps } from "../../utils/propValidation";
 import styled from "styled-components";
 import colors from "../../utils/style/colors";
-import { useState } from "react";
-import { useTheme } from "../../utils/hooks";
+// import { useState } from "react";
+// import { useTheme } from "../../utils/hooks";
+import DefaultPicture from "../../assets/images/profile.png";
+import { Component } from "react";
 
 const CardLabel = styled.span`
   color: ${({ theme }) =>
@@ -53,35 +55,84 @@ const cardPropTypes = {
   label: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
+  theme: PropTypes.string.isRequired,
 };
 
-function Card({ label, title, picture }) {
-  // Validation automatique de toutes les props
-  validateProps(
-    { label, title, picture },
-    cardPropTypes,
-    "Card"
-  );
+//function Card
+// function Card({ label, title, picture }) {
+//   // Validation automatique de toutes les props
+//   validateProps(
+//     { label, title, picture },
+//     cardPropTypes,
+//     "Card"
+//   );
 
-  const { theme } = useTheme();
-  const [isFavorite, setIsFavorite] =
-    useState(false);
-  const star = isFavorite ? "⭐️" : "";
+//   const { theme } = useTheme();
+//   const [isFavorite, setIsFavorite] =
+//     useState(false);
+//   const star = isFavorite ? "⭐️" : "";
 
-  return (
-    <CardWrapper
-      data-testid="card-wrapper"
-      theme={theme}
-      onClick={() => setIsFavorite(!isFavorite)}
-    >
-      <CardLabel theme={theme}>{label}</CardLabel>
-      <CardImage src={picture} alt="freelance" />
-      <CardTitle theme={theme}>
-        {star} {title} {star}
-      </CardTitle>
-    </CardWrapper>
-  );
+//   return (
+//     <CardWrapper
+//       data-testid="card-wrapper"
+//       theme={theme}
+//       onClick={() => setIsFavorite(!isFavorite)}
+//     >
+//       <CardLabel theme={theme}>{label}</CardLabel>
+//       <CardImage src={picture} alt="freelance" />
+//       <CardTitle theme={theme}>
+//         {star} {title} {star}
+//       </CardTitle>
+//     </CardWrapper>
+//   );
+// }
+
+//class Card
+class Card extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isFavorite: false,
+    };
+  }
+
+  render() {
+    const { theme, picture, label, title } =
+      this.props;
+
+    // Validation automatique de toutes les props
+    validateProps(
+      { label, title, picture, theme },
+      cardPropTypes,
+      "Card"
+    );
+
+    return (
+      <CardWrapper
+        theme={theme}
+        onClick={this.setFavorite}
+      >
+        <CardLabel theme={theme}>
+          {label}
+        </CardLabel>
+        <CardImage
+          src={picture}
+          alt="freelance"
+        />
+        <CardTitle theme={theme}>
+          {title}
+        </CardTitle>
+      </CardWrapper>
+    );
+  }
 }
+
+Card.defaultProps = {
+  label: "",
+  title: "",
+  picture: DefaultPicture,
+  theme: "light",
+};
 
 Card.propTypes = cardPropTypes;
 
